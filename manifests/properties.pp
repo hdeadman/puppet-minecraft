@@ -1,6 +1,8 @@
 class minecraft::properties {
 
-  minecraft::server_setting { 'server.properties': }
+  if $minecraft::manage_server_props {
+    include minecraft::server_properties
+  }
 
   if $minecraft::ops != undef {
     minecraft::server_setting { 'ops.txt': }
