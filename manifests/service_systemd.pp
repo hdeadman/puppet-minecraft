@@ -5,7 +5,7 @@ class minecraft::service_systemd {
     path    => '/etc/systemd/system/minecraft.service',
     owner   => 'root',
     group   => 'root',
-    mode    => '0744',
+    mode    => '0644',
     content => template($minecraft::systemd_template),
   }
 
