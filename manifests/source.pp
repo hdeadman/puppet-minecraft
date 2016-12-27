@@ -1,10 +1,14 @@
 class minecraft::source {
 
   $jar_name = 'minecraft_server'
-
+  
+  # make sure source is string, 1.11 won't match RE if it is number
+  validate_string($minecraft::minecraft::source)
+  
   case $minecraft::source {
-    /^(\d+)\.(\d+)\.(\d+)$/,    # Matches Semantic Versioning for vanilla Minecraft, see http://semver.org/
-    /^(\d{2})w(\d{2})[a-z]$/: { # Matches current versioning scheme for vanilla Minecraft snapshots, uses the same download source URL
+    /^(\d+)\.(\d{1,2})\.(\d{1,2})$/,    # Matches Semantic Versioning for vanilla Minecraft, see http://semver.org/
+    /^(\d+)\.(\d{1,2})$/,           # Matches versions like 1.11
+    /^(\d{2})w(\d{2})[a-z]$/ : { # Matches current versioning scheme for vanilla Minecraft snapshots, uses the same download source URL
       $download = "https://s3.amazonaws.com/Minecraft.Download/versions/${minecraft::source}/minecraft_server.${minecraft::source}.jar"
     }
     # Downloads latest type of Bukkit server

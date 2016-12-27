@@ -7,5 +7,10 @@ class minecraft::packages {
     }
   }
 
-  ensure_packages('screen')
+  # systemd unit file uses tmux, init script uses screen
+  if $::minecraft::use_systemd_service {
+    ensure_packages('tmux')
+  } else {
+    ensure_packages('screen')
+  }
 }

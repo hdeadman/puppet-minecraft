@@ -1,0 +1,20 @@
+[Unit]
+Description=Minecraft Server
+
+[Service]
+Environment="PATH=/bin:/usr/sbin:/usr/bin"
+WorkingDirectory=<%= scope['minecraft::install_dir'] %>
+User=<%= scope['minecraft::user'] %>
+Type=forking
+
+# To attach to server terminal, switch to minecraft user and run:
+# tmux attach -t mc
+# To detach from tmux without stopping session or server:
+# CTRL-b d
+ExecStart=/usr/bin/tmux new-session -s mc -d 'java -Xms<%= scope['minecraft::heap_start'] %>M -Xmx<%= scope['minecraft::heap_size'] %>M -jar minecraft_server.jar nogui'
+
+ExecStop=/usr/bin/tmux send-keys -t mc:0.0 'say SERVER SHUTTING DOWN. Saving map...' C-m 'save-all' C-m 'stop' C-m
+ExecStop=/bin/sleep 2
+
+[Install]
+WantedBy=multi-user.target

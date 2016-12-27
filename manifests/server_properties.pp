@@ -14,6 +14,7 @@ class minecraft::server_properties {
     lens    => 'Properties.lns',
     incl    => "${minecraft::install_dir}/server.properties",
     require => File['server.properties'],
+    notify  => Service['minecraft'],
   }
 
   augeas { 'base-server-properties' :

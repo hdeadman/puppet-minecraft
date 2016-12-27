@@ -12,6 +12,8 @@ class minecraft(
   $banned_players       = undef,
   $banned_ips           = undef,
   $white_list_players   = undef,
+  $use_systemd_service  = false,
+  $systemd_template     = 'minecraft/minecraft.service.erb',
   $manage_server_props  = true,
   # The following are server.properties attributes, see
   # http://minecraft.gamepedia.com/Server.properties for information
@@ -51,7 +53,11 @@ class minecraft(
 
   include ::minecraft::packages
   include ::minecraft::properties
-  include ::minecraft::service
+  if $use_systemd_service {
+    include ::minecraft::service_systemd
+  } else {
+    include ::minecraft::service
+  }
   include ::minecraft::source
   include ::minecraft::user
 
