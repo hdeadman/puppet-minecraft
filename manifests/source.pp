@@ -3,7 +3,7 @@ class minecraft::source {
   $jar_name = 'minecraft_server'
   
   # make sure source is string, 1.11 won't match RE if it is number
-  validate_string($minecraft::minecraft::source)
+  validate_string($minecraft::source)
   
   case $minecraft::source {
     /^(\d+)\.(\d{1,2})\.(\d{1,2})$/,    # Matches Semantic Versioning for vanilla Minecraft, see http://semver.org/
