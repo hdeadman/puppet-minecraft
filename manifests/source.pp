@@ -40,6 +40,7 @@ class minecraft::source {
                 Group[$minecraft::group],
                 Archive['minecraft_server'],
     ],
+    notify  => Service['minecraft'],
   }
 
   file { "${minecraft::install_dir}/eula.txt":
